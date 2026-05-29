@@ -79,6 +79,44 @@
       }
     );
 
+    test-route-flake-packages-from-multiple-aspects = denTest (
+      {
+        den,
+        lib,
+        config,
+        inputs,
+        ...
+      }:
+      {
+        imports = [ inputs.den.flakeOutputs.packages ];
+        den.hosts.x86_64-linux.igloo.users.tux = { };
+
+        den.schema.flake-system.includes = [
+          den.aspects.igloo
+          den.aspects.tux
+        ];
+
+        den.aspects.igloo = {
+          packages =
+            { pkgs, ... }:
+            {
+              inherit (pkgs) hello;
+            };
+        };
+
+        den.aspects.tux = {
+          packages =
+            { pkgs, ... }:
+            {
+              inherit (pkgs) cowsay;
+            };
+        };
+
+        expr = lib.attrNames config.flake.packages.x86_64-linux;
+        expected = [ "hello" "cowsay" ];
+      }
+    );
+
     test-route-flake-apps-from-aspect = denTest (
       {
         den,
