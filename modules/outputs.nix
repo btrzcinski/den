@@ -11,10 +11,7 @@ let
     (lib.evalModules {
       modules = [
         flakeModule
-        inputs.den.flakeOutputs.flake
-        {
-          imports = inputs.den.flakeOutputs.all.includes;
-        }
+        inputs.den.flakeOutputs.all
       ];
       specialArgs.inputs = inputs;
     }).config.flake;
