@@ -12,6 +12,9 @@ let
       modules = [
         flakeModule
         inputs.den.flakeOutputs.flake
+        {
+          imports = inputs.den.flakeOutputs.all.includes;
+        }
       ];
       specialArgs.inputs = inputs;
     }).config.flake;

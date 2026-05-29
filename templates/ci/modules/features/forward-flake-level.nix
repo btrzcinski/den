@@ -113,7 +113,10 @@
         };
 
         expr = lib.attrNames config.flake.packages.x86_64-linux;
-        expected = [ "hello" "cowsay" ];
+        expected = [
+          "cowsay"
+          "hello"
+        ];
       }
     );
 
