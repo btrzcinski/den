@@ -21,7 +21,7 @@ let
 in
 {
   imports = lib.optional (!(inputs ? flake-parts)) inputs.den.flakeOutputs.flake;
-  inherit flake;
+  flake = lib.filterAttrs (_: v: v != { }) flake;
 }
 // lib.optionalAttrs has-flake-parts {
   systems = den.systems;
